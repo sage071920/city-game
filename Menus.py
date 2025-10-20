@@ -121,3 +121,4 @@ class StartgameMenu:
             elif len(self.input_text) < 20 and event.unicode.isprintable():
                 self.input_text += event.unicode
         return None
+

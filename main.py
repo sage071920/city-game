@@ -1,5 +1,6 @@
 import pygame
 from Menus import StartMenu, StartgameMenu  # StartgameMenu importieren
+from map import Map
 
 class Game:
     def __init__(self):
@@ -10,6 +11,7 @@ class Game:
         pygame.display.set_caption("City Game")
         self.clock = pygame.time.Clock()
         self.running = True
+        self.map = Map(self.screen, self.WIDTH, self.HEIGHT)
         self.start_menu = StartMenu(self.screen, self.HEIGHT, self.WIDTH)
         self.startgame_menu = StartgameMenu(self.screen, self.HEIGHT, self.WIDTH)  # StartgameMenu Instanz
         self.screen.fill((0, 0, 0))  # Fill the screen with black
@@ -41,14 +43,24 @@ class Game:
                     elif result.get("action") == "create":
                         # Hier könnte das Spiel gestartet werden
                         print("Spielstart mit:", result)
+                        self.show_map()
                         menu_active = False
+
             self.startgame_menu.draw()
             self.clock.tick(60)
+
+    def show_map(self):
+        while self.running:
+            self.map.move_map()  # Bewegung abfragen
+            self.map.show_map()  # Map anzeigen
+            self.clock.tick(60)  # Framerate setzen
+
 
     def run(self):
         while True:
             self.show_start_menu()
             self.show_startgame_menu()
+
 
 
 if __name__ == "__main__":
